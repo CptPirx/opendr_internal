@@ -33,7 +33,7 @@ from opendr.engine.target import TrackingAnnotation, TrackingAnnotation3D, Track
 from opendr.perception.object_tracking_2d.fair_mot.object_tracking_2d_fair_mot_learner import ObjectTracking2DFairMotLearner
 from opendr.engine.data import Video, Image
 
-TEXT_COLOR = (255, 0, 255)  # B G R
+TEXT_COLOR = (0, 0, 255)  # B G R
 
 
 # Initialize the output frame and a lock used to ensure thread-safe
@@ -42,8 +42,8 @@ TEXT_COLOR = (255, 0, 255)  # B G R
 output_frame = None
 image_generator = None
 lock = threading.Lock()
-colors = [(255, 0, 255), (0, 0, 255), (0, 255, 0), (255, 0, 0), (35, 69, 55), (43, 63, 54), (37, 70, 54), (50, 67, 54), (51, 66, 49), (43, 75, 64), (55, 65, 42), (53, 63, 42), (43, 46, 38), (41, 41, 36), (70, 54, 35), (70, 54, 41), (65, 54, 40), (63, 55, 38), (63, 54, 35), (83, 73, 49), (81, 65, 45), (75, 65, 42), (85, 74, 60), (79, 64, 55), (75, 67, 59), (74, 75, 70), (70, 71, 62), (57, 62, 46), (68, 54, 45), (66, 52, 43), (69, 54, 43), (73, 59, 47), (30, 52, 66), (41, 55, 65), (36, 54, 64), (44, 87, 120), (124, 129, 124), (109, 120, 118), (119, 132, 142), (105, 125, 137), (108, 94, 83), (93, 78, 70), (90, 76, 66), (90, 76, 66), (90, 77, 65), (91, 82, 68), (85, 77, 66), (84, 79, 58), (133, 113, 88), (130, 127, 121), (120, 109, 95), (112, 110, 102), (113, 110, 97), (103, 109, 99), (122, 124, 118), (198, 234, 221), (194, 230, 236)]
 
+colors = [(255, 0, 255), (0, 0, 255), (0, 255, 0), (255, 0, 0), (128, 0, 0), (255, 128, 0), (0, 128, 0), (255, 0, 128), ]
 
 # initialize a flask object
 app = Flask(__name__)
@@ -73,7 +73,7 @@ def runnig_fps(alpha=0.1):
 def draw_fps(frame, fps):
     cv2.putText(
         frame,
-        f"{fps:.1f} FPS",
+        "%.1f FPS" % fps,
         (10, frame.shape[0] - 10),
         cv2.FONT_HERSHEY_SIMPLEX,
         1,
@@ -94,7 +94,7 @@ def draw_dict(frame, dict, scale=5):
             cv2.FONT_HERSHEY_SIMPLEX,
             scale,
             TEXT_COLOR,
-            scale,
+            2,
         )
         i += 1
 
@@ -145,7 +145,7 @@ def fair_mot_tracking(model_name, device):
             t = time.time()
             if predict:
                 predictions = learner.infer(image)
-                print("Found", len(predictions), "objects")
+                # print("Found", len(predictions), "objects")
             predict_time = time.time() - t
             t = time.time()
 
@@ -162,7 +162,7 @@ def fair_mot_tracking(model_name, device):
             draw_dict(
                 frame,
                 {
-                    "FPS": fps(),
+                    "FPS": "%.1f" % fps(),
                     "predict": str(int(predict_time * 100 / total_time)) + "%",
                     "get data": str(int(image_time * 100 / total_time)) + "%",
                     "draw": str(int(draw_time * 100 / total_time)) + "%",

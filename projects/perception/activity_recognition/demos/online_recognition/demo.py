@@ -74,14 +74,17 @@ def draw_fps(frame, fps):
         cv2.FONT_HERSHEY_SIMPLEX,
         1,
         TEXT_COLOR,
-        1,
+        2,
     )
 
 
-def draw_preds(frame, preds: Dict):
+def draw_preds(frame, preds: Dict, threshold=0.3):
+
     base_skip = 40
     delta_skip = 30
     for i, (cls, prob) in enumerate(preds.items()):
+        if prob < threshold:
+            continue
         cv2.putText(
             frame,
             f"{prob:04.3f} {cls}",
@@ -89,7 +92,7 @@ def draw_preds(frame, preds: Dict):
             cv2.FONT_HERSHEY_SIMPLEX,
             1,
             TEXT_COLOR,
-            1,
+            2,
         )
 
 

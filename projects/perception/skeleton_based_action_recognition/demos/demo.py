@@ -203,7 +203,7 @@ if __name__ == '__main__':
 
             if len(poses) > 0:
                 counter += 1
-                print(counter)
+                # print(counter)
                 poses_list.append(poses)
 
             if counter > args.num_frames:
@@ -214,7 +214,7 @@ if __name__ == '__main__':
 
             prediction = action_classifier.infer(skeleton_seq)
             category_labels = preds2label(prediction.confidence)
-            print(category_labels)
+            # print(category_labels)
             draw_preds(img, category_labels)
             # Calculate a running average on FPS
             end_time = time.perf_counter()

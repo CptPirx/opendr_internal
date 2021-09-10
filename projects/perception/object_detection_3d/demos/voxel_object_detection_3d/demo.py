@@ -395,7 +395,7 @@ def voxel_object_detection_3d(config_path, model_name=None):
             draw_dict(
                 frame,
                 {
-                    "FPS": fps(),
+                    "FPS": "%.1f" % fps(),
                     "predict": str(int(predict_time * 100 / total_time)) + "%",
                     "get data": str(int(pc_time * 100 / total_time)) + "%",
                     "draw": str(int(draw_time * 100 / total_time)) + "%",

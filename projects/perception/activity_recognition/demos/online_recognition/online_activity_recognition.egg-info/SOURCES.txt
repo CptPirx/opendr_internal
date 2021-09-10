@@ -1,0 +1,8 @@
+README.md
+setup.py
+activity_recognition/__init__.py
+online_activity_recognition.egg-info/PKG-INFO
+online_activity_recognition.egg-info/SOURCES.txt
+online_activity_recognition.egg-info/dependency_links.txt
+online_activity_recognition.egg-info/requires.txt
+online_activity_recognition.egg-info/top_level.txt
